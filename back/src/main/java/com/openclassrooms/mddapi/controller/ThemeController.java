@@ -34,9 +34,9 @@ public class ThemeController {
     return themeService.findById(id);
   }
 
-  @PostMapping("")
-  ThemeDto createTheme(@Valid @RequestBody ThemeDto themeDto) {
-    return themeService.create(themeDto);
-  }
+  // @PostMapping("")
+  // ThemeDto createTheme(@Valid @RequestBody ThemeDto themeDto) {
+  //   return themeService.create(themeDto);
+  // }
 
 }

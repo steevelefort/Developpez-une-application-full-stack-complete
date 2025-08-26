@@ -13,11 +13,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @Table(name = "THEMES")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Theme {
 
   @Id
@@ -37,6 +41,12 @@ public class Theme {
   @UpdateTimestamp
   @Column(name = "updated_at")
   private LocalDateTime updatedAt;
+
+
+  public Theme(String name, String description) {
+    this.name = name;
+    this.description = description;
+  }
 
 }
 
