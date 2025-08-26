@@ -6,7 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.openclassrooms.mddapi.dto.ThemeDto;
+import com.openclassrooms.mddapi.dto.response.ThemeResponse;
+// import com.openclassrooms.mddapi.dto.ThemeDto;
 import com.openclassrooms.mddapi.mapper.ThemeMapper;
 import com.openclassrooms.mddapi.model.Theme;
 import com.openclassrooms.mddapi.repository.ThemeRepository;
@@ -22,19 +23,13 @@ public class ThemeService {
   @Autowired
   ThemeMapper themeMapper;
 
-  public List<ThemeDto> findAll() {
-    return themeMapper.toDtoList(themeRepository.findAll());
+  public List<ThemeResponse> findAll() {
+    return themeMapper.toResponseList(themeRepository.findAll());
   }
 
-  // public ThemeDto create(ThemeDto themeDto) {
-  // Theme theme = themeMapper.toEntity(themeDto);
-  // ThemeDto response = themeMapper.toDto(themeRepository.save(theme));
-  // return response;
-  // }
-
-  public ThemeDto findById(Long id) {
+  public ThemeResponse findById(Long id) {
     Theme theme = themeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
-    return themeMapper.toDto(theme);
+    return themeMapper.toResponse(theme);
   }
 
   /**

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.mddapi.dto.ThemeDto;
+import com.openclassrooms.mddapi.dto.response.ThemeResponse;
 import com.openclassrooms.mddapi.service.ThemeService;
 
 import jakarta.validation.Valid;
@@ -25,18 +25,13 @@ public class ThemeController {
   ThemeService themeService;
 
   @GetMapping("")
-  List<ThemeDto> getAllThemes() {
+  List<ThemeResponse> getAllThemes() {
     return themeService.findAll();
   }
 
   @GetMapping("/{id}")
-  ThemeDto getThemeById(@PathVariable Long id) {
+  ThemeResponse getThemeById(@PathVariable Long id) {
     return themeService.findById(id);
   }
-
-  // @PostMapping("")
-  // ThemeDto createTheme(@Valid @RequestBody ThemeDto themeDto) {
-  //   return themeService.create(themeDto);
-  // }
 
 }
