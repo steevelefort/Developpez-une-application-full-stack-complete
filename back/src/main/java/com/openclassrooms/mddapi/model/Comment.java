@@ -8,9 +8,12 @@ import org.hibernate.validator.constraints.Length;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -19,20 +22,25 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Table(name = "THEMES")
+@Table(name = "COMMENTS")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Theme {
+public class Comment {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false, length = 100)
-  private String name;
-
   @Column(nullable = false, columnDefinition = "TEXT")
-  private String description;
+  private String content;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "article_id", nullable = false)
+  private Article article;
 
   @CreationTimestamp
   @Column(name = "created_at", updatable = false)
@@ -43,14 +51,4 @@ public class Theme {
   private LocalDateTime updatedAt;
 
 
-  /**
-   * Additionnal constructor
-   * Used by the data seeder
-   */
-  public Theme(String name, String description) {
-    this.name = name;
-    this.description = description;
-  }
-
 }
-
