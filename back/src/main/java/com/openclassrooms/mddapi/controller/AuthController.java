@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openclassrooms.mddapi.dto.request.UserLoginRequest;
 import com.openclassrooms.mddapi.dto.request.UserRegisterRequest;
 import com.openclassrooms.mddapi.dto.response.AuthResponse;
 import com.openclassrooms.mddapi.dto.response.BasicResponse;
@@ -24,9 +25,14 @@ public class AuthController {
 
   @PostMapping(value = "/register", produces = "application/json")
   // @SecurityRequirements({})
-  public BasicResponse register(@Valid @RequestBody UserRegisterRequest request) {
-    userService.register(request);
-    return new BasicResponse("Utilisateur créé avec succés");
+  public AuthResponse register(@Valid @RequestBody UserRegisterRequest request) {
+    return userService.register(request);
+    // return new BasicResponse("Utilisateur créé avec succés");
+  }
+
+  @PostMapping(value = "/login", produces = "application/json")
+  public AuthResponse login(@Valid @RequestBody UserLoginRequest request) {
+    return userService.login(request);
   }
 
 

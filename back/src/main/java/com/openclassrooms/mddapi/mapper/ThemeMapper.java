@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.mapper;
 import java.util.List;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import com.openclassrooms.mddapi.dto.response.ThemeResponse;
 import com.openclassrooms.mddapi.model.Theme;
@@ -11,7 +12,11 @@ import com.openclassrooms.mddapi.model.Theme;
 public interface ThemeMapper {
 
   ThemeResponse toResponse(Theme theme);
+
+  @Mapping(target = "createdAt", ignore = true)
+  @Mapping(target = "updatedAt", ignore = true)
   Theme toEntity(ThemeResponse themeDto);
+
   List<ThemeResponse> toResponseList(List<Theme> themes);
 
 }

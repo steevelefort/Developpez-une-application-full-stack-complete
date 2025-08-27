@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.openclassrooms.mddapi.dto.request.UserLoginRequest;
 import com.openclassrooms.mddapi.dto.request.UserRegisterRequest;
+import com.openclassrooms.mddapi.dto.response.AuthResponse;
+import com.openclassrooms.mddapi.mapper.AuthResponseMapper;
 import com.openclassrooms.mddapi.mapper.UserRegisterMapper;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
@@ -26,55 +29,34 @@ public class UserService {
   @Autowired
   PasswordEncoder passwordEncoder;
 
-  public void register(@Valid UserRegisterRequest request) {
+  @Autowired
+  AuthResponseMapper authResponseMapper;
+
+  @Autowired
+  JwtService jwtService;
+
+  public AuthResponse register(@Valid UserRegisterRequest request) {
     User user = userRegisterMapper.toEntity(request);
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     User savedUser = userRepository.save(user);
+    String token = jwtService.generateToken(user.getEmail(), savedUser.getId());
+    AuthResponse authResponse = authResponseMapper.toResponse(savedUser);
+    authResponse.setToken(token);
+    return authResponse;
   }
 
-  // @Autowired
-  // UserMapper userMapper;
+  public AuthResponse login(@Valid UserLoginRequest request) {
+    User foundUser = userRepository.findByEmailOrUserName(request.getIdentifier(), request.getIdentifier()).orElseThrow(
+        // () -> new BadRequest("Identifiant ou mot de passe incorrect")
+        () -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Identifiant ou mot de passe incorrect"));
 
-  // public List<UserResponse> findAll() {
-  // return userMapper.toResponseList(userRepository.findAll());
-  // }
-  //
-  // public UserResponse findById(Long id) {
-  // User user = userRepository.findById(id).orElseThrow(() -> new
-  // EntityNotFoundException());
-  // return userMapper.toResponse(user);
-  // }
-
-  // /**
-  // * Seed some Themes in the database if empty
-  // * Automatically runs at start by configuration/DataSeeder.java
-  // */
-  // public void seedData() {
-  // if (themeRepository.count() == 0) {
-  // List<Theme> themes = Arrays.asList(
-  // new Theme("JavaScript", "Langage de programmation pour le web côté client et
-  // serveur"),
-  // new Theme("Java", "Langage orienté objet pour applications d'entreprise et
-  // Android"),
-  // new Theme("Python", "Langage polyvalent pour développement web, IA et data
-  // science"),
-  // new Theme("Angular", "Framework TypeScript pour applications web
-  // single-page"),
-  // new Theme("React", "Bibliothèque JavaScript pour construire des interfaces
-  // utilisateur"),
-  // new Theme("Spring Boot", "Framework Java pour développement d'API REST et
-  // microservices"),
-  // new Theme("Node.js", "Runtime JavaScript côté serveur pour applications
-  // backend"),
-  // new Theme("DevOps", "Pratiques et outils pour automatisation et déploiement
-  // continu"),
-  // new Theme("Base de données", "Conception, optimisation et gestion des
-  // systèmes de données"),
-  // new Theme("Sécurité", "Bonnes pratiques et techniques de cybersécurité
-  // applicative")
-  // );
-  // themeRepository.saveAll(themes);
-  // }
-  // }
+    if (!passwordEncoder.matches(request.getPassword(), foundUser.getPassword())) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Identifiant ou mot de passe incorrect");
+    }
+    String token = jwtService.generateToken(foundUser.getEmail(), foundUser.getId());
+    AuthResponse authResponse = authResponseMapper.toResponse(foundUser);
+    authResponse.setToken(token);
+    return authResponse;
+  }
 
 }
