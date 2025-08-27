@@ -11,5 +11,6 @@ public interface UserRegisterMapper {
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "createdAt", ignore = true)
   @Mapping(target = "updatedAt", ignore = true)
+  @Mapping(target = "themes", ignore = true)
   User toEntity(UserRegisterRequest userRegisterRequest);
 }

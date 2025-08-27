@@ -15,7 +15,9 @@ import com.openclassrooms.mddapi.dto.response.UserResponse;
 import com.openclassrooms.mddapi.mapper.AuthResponseMapper;
 import com.openclassrooms.mddapi.mapper.UserRegisterMapper;
 import com.openclassrooms.mddapi.mapper.UserResponseMapper;
+import com.openclassrooms.mddapi.model.Theme;
 import com.openclassrooms.mddapi.model.User;
+import com.openclassrooms.mddapi.repository.ThemeRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
 import jakarta.validation.Valid;
@@ -25,6 +27,9 @@ public class UserService {
 
   @Autowired
   UserRepository userRepository;
+
+  @Autowired
+  ThemeRepository themeRepository;
 
   @Autowired
   UserRegisterMapper userRegisterMapper;
@@ -73,14 +78,30 @@ public class UserService {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ce nom d'utilisateur est déjà pris");
     }
     User user = userRepository.findById(userId).orElseThrow(
-        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable")
-        );
-    if (!request.getEmail().equals(user.getEmail())) { user.setEmail(request.getEmail()); }
-    if (!request.getUserName().equals(user.getUserName())) { user.setUserName(request.getUserName()); }
-    if (request.getPassword() != null && request.getPassword().length() > 0) { user.setPassword(passwordEncoder.encode(request.getPassword())); }
+        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
+    if (!request.getEmail().equals(user.getEmail())) {
+      user.setEmail(request.getEmail());
+    }
+    if (!request.getUserName().equals(user.getUserName())) {
+      user.setUserName(request.getUserName());
+    }
+    if (request.getPassword() != null && request.getPassword().length() > 0) {
+      user.setPassword(passwordEncoder.encode(request.getPassword()));
+    }
     user = userRepository.save(user);
     return userResponseMapper.toResponse(user);
   }
 
+  public void subscribe(Long userId, Long themeId) {
+    User user = userRepository.findById(userId).orElseThrow(
+        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
+    Theme theme = themeRepository.findById(themeId).orElseThrow(
+        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Theme introuvable"));
+    if (!user.getThemes().contains(theme)) {
+      user.getThemes().add(theme);
+      userRepository.save(user);
+    }
+
+  }
 
 }

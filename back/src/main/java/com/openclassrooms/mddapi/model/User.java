@@ -1,18 +1,20 @@
 package com.openclassrooms.mddapi.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,9 +27,8 @@ import lombok.ToString;
 @Table(name = "USERS")
 @NoArgsConstructor
 @AllArgsConstructor
-// @EqualsAndHashCode(exclude = { "user", "article" })
-// @EqualsAndHashCode(exclude = { "article" })
-// @ToString(exclude = { "user", "article" })
+@ToString(exclude = "themes")
+@EqualsAndHashCode(exclude = "themes")
 public class User {
 
   @Id
@@ -51,7 +52,8 @@ public class User {
   @Column(name = "updated_at")
   private LocalDateTime updatedAt;
 
-  // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-  // private List<Article> articles;
+  @ManyToMany
+  @JoinTable(name = "users_themes", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "theme_id"))
+  private Set<Theme> themes = new HashSet<>();
 
 }

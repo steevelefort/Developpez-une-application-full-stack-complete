@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,13 +36,14 @@ public class UserController {
     return response;
   }
 
-  @PostMapping(value = "/substribe/{themeId}", produces = "application/json")
-  BasicResponse subscribe() {
-    // TODO: créer la méthode subscribe dans le UserService
+  @PostMapping(value = "/subscribe/{themeId}", produces = "application/json")
+  BasicResponse subscribe(@PathVariable Long themeId, @AuthenticationPrincipal Jwt jwt) {
+    Long userId = ((Number) jwt.getClaim("userId")).longValue();
+    userService.subscribe(userId, themeId);
     return new BasicResponse("Abonnement effectué");
   }
 
-  @DeleteMapping(value = "/unsubstribe/{themeId}", produces = "application/json")
+  @DeleteMapping(value = "/subscribe/{themeId}", produces = "application/json")
   BasicResponse unSubscribe() {
     // TODO: créer la méthode unsubscribe dans le UserService
     return new BasicResponse("Abonnement effectué");

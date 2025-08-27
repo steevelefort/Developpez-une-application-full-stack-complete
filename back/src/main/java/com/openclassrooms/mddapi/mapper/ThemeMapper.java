@@ -15,6 +15,7 @@ public interface ThemeMapper {
 
   @Mapping(target = "createdAt", ignore = true)
   @Mapping(target = "updatedAt", ignore = true)
+  @Mapping(target = "users", ignore = true)
   Theme toEntity(ThemeResponse themeDto);
 
   List<ThemeResponse> toResponseList(List<Theme> themes);

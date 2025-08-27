@@ -10,6 +10,7 @@ import com.openclassrooms.mddapi.model.User;
 public interface UserResponseMapper {
 
   @Mapping(target = "password", ignore = true)
+  @Mapping(target = "themes", ignore = true)
   User toEntity(UserResponse userResponseRequest);
   UserResponse toResponse(User user);
 }
