@@ -9,9 +9,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.openclassrooms.mddapi.dto.request.UserLoginRequest;
 import com.openclassrooms.mddapi.dto.request.UserRegisterRequest;
+import com.openclassrooms.mddapi.dto.request.UserUpdateRequest;
 import com.openclassrooms.mddapi.dto.response.AuthResponse;
+import com.openclassrooms.mddapi.dto.response.UserResponse;
 import com.openclassrooms.mddapi.mapper.AuthResponseMapper;
 import com.openclassrooms.mddapi.mapper.UserRegisterMapper;
+import com.openclassrooms.mddapi.mapper.UserResponseMapper;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
@@ -33,9 +36,12 @@ public class UserService {
   AuthResponseMapper authResponseMapper;
 
   @Autowired
+  UserResponseMapper userResponseMapper;
+
+  @Autowired
   JwtService jwtService;
 
-  public AuthResponse register(@Valid UserRegisterRequest request) {
+  public AuthResponse register(UserRegisterRequest request) {
     User user = userRegisterMapper.toEntity(request);
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     User savedUser = userRepository.save(user);
@@ -45,7 +51,7 @@ public class UserService {
     return authResponse;
   }
 
-  public AuthResponse login(@Valid UserLoginRequest request) {
+  public AuthResponse login(UserLoginRequest request) {
     User foundUser = userRepository.findByEmailOrUserName(request.getIdentifier(), request.getIdentifier()).orElseThrow(
         // () -> new BadRequest("Identifiant ou mot de passe incorrect")
         () -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Identifiant ou mot de passe incorrect"));
@@ -58,5 +64,23 @@ public class UserService {
     authResponse.setToken(token);
     return authResponse;
   }
+
+  public UserResponse update(UserUpdateRequest request, Long userId) {
+    if (userRepository.existsByEmailAndIdNot(request.getEmail(), userId)) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cette adresse mail est déjà utilisée");
+    }
+    if (userRepository.existsByUserNameAndIdNot(request.getUserName(), userId)) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ce nom d'utilisateur est déjà pris");
+    }
+    User user = userRepository.findById(userId).orElseThrow(
+        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable")
+        );
+    if (!request.getEmail().equals(user.getEmail())) { user.setEmail(request.getEmail()); }
+    if (!request.getUserName().equals(user.getUserName())) { user.setUserName(request.getUserName()); }
+    if (request.getPassword() != null && request.getPassword().length() > 0) { user.setPassword(passwordEncoder.encode(request.getPassword())); }
+    user = userRepository.save(user);
+    return userResponseMapper.toResponse(user);
+  }
+
 
 }

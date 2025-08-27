@@ -16,7 +16,7 @@ import com.openclassrooms.mddapi.service.ThemeService;
 
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+// @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/theme")
 public class ThemeController {
