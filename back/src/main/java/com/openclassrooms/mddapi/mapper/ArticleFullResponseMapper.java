@@ -15,6 +15,9 @@ public interface ArticleFullResponseMapper {
   @Mapping(source = "theme.name", target = "themeName")
   ArticleFullResponse toResponse(Article article);
 
+  @Mapping(target = "user", ignore = true)
+  @Mapping(target = "theme", ignore = true)
+  @Mapping(target = "comments", ignore = true)
   Article toEntity(ArticleFullResponse articleResponse);
 
   List<ArticleFullResponse> toResponseList(List<Article> articles);

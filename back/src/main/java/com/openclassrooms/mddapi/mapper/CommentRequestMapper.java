@@ -12,13 +12,11 @@ import com.openclassrooms.mddapi.model.Comment;
 @Mapper(componentModel = "spring")
 public interface CommentRequestMapper {
 
-  // @Mapping(source = "user.userName", target = "userName")
-  // @Mapping(source = "theme.name", target = "themeName")
-  // ArticleResponse toResponse(Article article);
-  //
-  // @Mapping(target = "comments", ignore = true)
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "user", ignore = true)
+  @Mapping(target = "article", ignore = true)
+  @Mapping(target = "createdAt", ignore = true)
+  @Mapping(target = "updatedAt", ignore = true)
   Comment toEntity(CommentRequest commentRequest);
-
-  // List<CommentResponse> toResponseList(List<Comment> comments);
 
 }

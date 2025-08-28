@@ -15,6 +15,8 @@ public interface ArticleResponseMapper {
   @Mapping(source = "theme.name", target = "themeName")
   ArticleResponse toResponse(Article article);
 
+  @Mapping(target = "theme", ignore = true)
+  @Mapping(target = "user", ignore = true)
   @Mapping(target = "comments", ignore = true)
   Article toEntity(ArticleResponse articleResponse);
 

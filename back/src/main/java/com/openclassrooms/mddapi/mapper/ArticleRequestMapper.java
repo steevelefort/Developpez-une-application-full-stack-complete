@@ -12,7 +12,6 @@ import com.openclassrooms.mddapi.model.Article;
 @Mapper(componentModel = "spring", uses = {UserResponseMapper.class, ThemeMapper.class})
 public interface ArticleRequestMapper {
 
-  ArticleRequest toRequest(Article article);
 
   @Mapping(target = "user", ignore = true)
   @Mapping(target = "theme", ignore = true)
@@ -23,6 +22,7 @@ public interface ArticleRequestMapper {
   Article toEntity(ArticleRequest articleRequest);
 
   @Mapping(source = "user.userName", target = "userName")
+  @Mapping(source = "theme.name", target = "themeName")
   ArticleResponse toResponse(Article article);
 
   List<ArticleResponse> toResponseList(List<Article> articles);
