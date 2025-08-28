@@ -101,7 +101,17 @@ public class UserService {
       user.getThemes().add(theme);
       userRepository.save(user);
     }
+  }
 
+  public void unsubscribe(Long userId, Long themeId) {
+    User user = userRepository.findById(userId).orElseThrow(
+        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
+    Theme theme = themeRepository.findById(themeId).orElseThrow(
+        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Theme introuvable"));
+    if (user.getThemes().contains(theme)) {
+      user.getThemes().remove(theme);
+      userRepository.save(user);
+    }
   }
 
 }

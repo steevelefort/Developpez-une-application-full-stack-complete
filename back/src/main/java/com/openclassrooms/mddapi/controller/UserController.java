@@ -11,12 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.mddapi.dto.request.UserLoginRequest;
-import com.openclassrooms.mddapi.dto.request.UserRegisterRequest;
 import com.openclassrooms.mddapi.dto.request.UserUpdateRequest;
 import com.openclassrooms.mddapi.dto.response.BasicResponse;
 import com.openclassrooms.mddapi.dto.response.UserResponse;
-// import com.openclassrooms.mddapi.dto.response.AuthResponse;
 import com.openclassrooms.mddapi.service.UserService;
 
 import jakarta.validation.Valid;
@@ -44,18 +41,10 @@ public class UserController {
   }
 
   @DeleteMapping(value = "/subscribe/{themeId}", produces = "application/json")
-  BasicResponse unSubscribe() {
-    // TODO: créer la méthode unsubscribe dans le UserService
-    return new BasicResponse("Abonnement effectué");
+  BasicResponse unSubscribe(@PathVariable Long themeId, @AuthenticationPrincipal Jwt jwt) {
+    Long userId = ((Number) jwt.getClaim("userId")).longValue();
+    userService.unsubscribe(userId, themeId);
+    return new BasicResponse("Désabonnement effectué");
   }
-  // @GetMapping("")
-  // List<ThemeResponse> getAllThemes() {
-  // return themeService.findAll();
-  // }
-  //
-  // @GetMapping("/{id}")
-  // ThemeResponse getThemeById(@PathVariable Long id) {
-  // return themeService.findById(id);
-  // }
 
 }
