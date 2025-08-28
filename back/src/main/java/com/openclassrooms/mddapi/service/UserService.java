@@ -114,4 +114,10 @@ public class UserService {
     }
   }
 
+  public UserResponse findById(Long userId) {
+    User user = userRepository.findById(userId).orElseThrow(
+        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
+    return userResponseMapper.toResponse(user);
+  }
+
 }

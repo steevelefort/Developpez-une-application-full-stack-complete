@@ -11,6 +11,8 @@ import com.openclassrooms.mddapi.model.Article;
 @Mapper(componentModel = "spring")
 public interface ArticleResponseMapper {
 
+  @Mapping(source = "user.userName", target = "userName")
+  @Mapping(source = "theme.name", target = "themeName")
   ArticleResponse toResponse(Article article);
 
   @Mapping(target = "comments", ignore = true)

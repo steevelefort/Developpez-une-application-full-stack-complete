@@ -1,8 +1,10 @@
 package com.openclassrooms.mddapi.dto.request;
 
 import com.openclassrooms.mddapi.validation.ValidPassword;
+import com.openclassrooms.mddapi.validation.ValidThemeExists;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,8 +22,9 @@ public class ArticleRequest {
   @NotBlank(message = "Veuillez renseigner le contenu de l'article")
   private String content;
 
-  @NotBlank(message = "Le mot de passe est obligatoire")
-  @ValidPassword
+  @NotNull(message = "Le thème est obligatoire")
+  @ValidThemeExists
   private Long themeId;
+
 
 }

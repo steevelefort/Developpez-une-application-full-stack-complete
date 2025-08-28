@@ -1,10 +1,10 @@
 package com.openclassrooms.mddapi.dto.response;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import com.openclassrooms.mddapi.model.Comment;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArticleResponse {
+public class ArticleFullResponse {
 
   private Long id;
 
@@ -20,15 +20,14 @@ public class ArticleResponse {
 
   private String content;
 
-  // private ThemeResponse theme;
   private String themeName;
 
-  // private UserResponse user;
   private String userName;
+
+  private List<CommentResponse> comments;
 
   private LocalDateTime createdAt;
 
   private LocalDateTime updatedAt;
 
 }
-
