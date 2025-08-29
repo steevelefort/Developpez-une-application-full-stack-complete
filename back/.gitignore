@@ -33,3 +33,5 @@ build/
 .vscode/
 
 keys/*
+
+/run-backend.sh

@@ -1,0 +1,21 @@
+@config "../../tailwind.config.js";
+@import "tailwindcss";
+
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.btn-plain {
+  @apply bg-purple rounded-xs px-5 py-1 text-white font-bold cursor-pointer w-48;
+}
+
+.btn-outline {
+  @apply rounded-xs px-5 py-1 text-black border font-bold cursor-pointer w-48;
+}
