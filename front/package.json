@@ -27,6 +27,7 @@
     "@angular/cdk": "^20.2.0",
     "@angular/cli": "^20.2.0",
     "@angular/compiler-cli": "^20.2.1",
+    "@angular/language-service": "^20.2.2",
     "@angular/material": "^20.2.0",
     "@types/jasmine": "~4.0.0",
     "@types/node": "^18.19.123",
