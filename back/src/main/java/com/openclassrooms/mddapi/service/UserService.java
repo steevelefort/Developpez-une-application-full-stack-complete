@@ -12,7 +12,6 @@ import com.openclassrooms.mddapi.dto.request.UserRegisterRequest;
 import com.openclassrooms.mddapi.dto.request.UserUpdateRequest;
 import com.openclassrooms.mddapi.dto.response.AuthResponse;
 import com.openclassrooms.mddapi.dto.response.UserResponse;
-import com.openclassrooms.mddapi.mapper.AuthResponseMapper;
 import com.openclassrooms.mddapi.mapper.UserRegisterMapper;
 import com.openclassrooms.mddapi.mapper.UserResponseMapper;
 import com.openclassrooms.mddapi.model.Theme;
@@ -37,8 +36,6 @@ public class UserService {
   @Autowired
   PasswordEncoder passwordEncoder;
 
-  @Autowired
-  AuthResponseMapper authResponseMapper;
 
   @Autowired
   UserResponseMapper userResponseMapper;
@@ -51,7 +48,7 @@ public class UserService {
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     User savedUser = userRepository.save(user);
     String token = jwtService.generateToken(user.getEmail(), savedUser.getId());
-    AuthResponse authResponse = authResponseMapper.toResponse(savedUser);
+    AuthResponse authResponse = new AuthResponse();
     authResponse.setToken(token);
     return authResponse;
   }
@@ -65,7 +62,7 @@ public class UserService {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Identifiant ou mot de passe incorrect");
     }
     String token = jwtService.generateToken(foundUser.getEmail(), foundUser.getId());
-    AuthResponse authResponse = authResponseMapper.toResponse(foundUser);
+    AuthResponse authResponse = new AuthResponse();
     authResponse.setToken(token);
     return authResponse;
   }
