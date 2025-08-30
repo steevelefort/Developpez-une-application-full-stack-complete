@@ -1,0 +1,9 @@
+<i class="material-icons block cursor-pointer mx-4 md:!hidden" (click)="toggle()">menu</i>
+<div class="md:block" [ngClass]="{'open':isOpen}"  (click)="toggle()">
+  <nav class="md:flex" [ngClass]="{'open': isOpen}">
+    <ul>
+      <ng-content>
+      </ng-content>
+    </ul>
+  </nav>
+</div>

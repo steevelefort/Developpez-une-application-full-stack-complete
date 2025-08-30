@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { UserLayoutComponent } from "src/app/components/layouts/user-layout/user-layout.component";
 
 @Component({
-  selector: 'app-feed',
+  selector: 'app-themes',
   imports: [UserLayoutComponent],
-  templateUrl: './feed.component.html',
-  styleUrl: './feed.component.css'
+  templateUrl: './themes.component.html',
+  styleUrl: './themes.component.css'
 })
-export class FeedComponent {
+export class ThemesComponent {
 
 }

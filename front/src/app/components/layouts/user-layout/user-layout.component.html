@@ -1,0 +1,20 @@
+<header class="flex flex-col md:flex-col-reverse">
+  <div class="flex items-center border-b py-2 justify-between">
+    <img src="/assets/logo_p6.png" alt="logo" class="w-24 md:w-32 ml-3" />
+    <div class="flex">
+      <app-drawer>
+        <li class="cursor-pointer text-red-800 text-xs font-bold">Se déconnecter</li>
+        <li class="px-3 py-1 cursor-pointer" (click)="onClickArticles()">Articles</li>
+        <li class="px-3 py-1 cursor-pointer" (click)="onClickThemes()">Thèmes</li>
+        <li class="md:pr-5 cursor-pointer" (click)="onClickProfile()"><img src="/assets/user.png" alt="" class="w-12 h-12"></li>
+      </app-drawer>
+    </div>
+  </div>
+</header>
+
+<div class="flex flex-col items-center">
+
+  <ng-content>
+  </ng-content>
+
+</div>
