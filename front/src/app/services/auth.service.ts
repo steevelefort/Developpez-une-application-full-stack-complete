@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { AuthResponse } from '../models/Auth';
+import { computed, Injectable, signal } from '@angular/core';
+import { AuthResponse, LoginRequest, RegisterRequest } from '../models/Auth';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,16 +10,35 @@ export class AuthService {
 
   private baseUrl = "http://localhost:8080/";
   private path = "api/auth/";
-  private token: String | null = null;
+
+  private _token = signal<string | null>(localStorage.getItem('token'));
+  readonly token = this._token.asReadonly();
+  readonly isAuthenticated = computed(() => !!this._token());
 
   constructor(private http: HttpClient) {
   }
 
-  public login(login, password): Boolean {
-    this.http.post<AuthResponse>(`${this.baseUrl}+${this.path}`, );
-    return true;
+  private setAndSaveToken(token: string | null) {
+    this._token.set(token);
+    if (token === null) {
+      localStorage.removeItem('token');
+    } else {
+      localStorage.setItem('token', token);
+    }
   }
 
+  public login(loginRequest: LoginRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.baseUrl}${this.path}login`, loginRequest)
+      .pipe(tap(authResponse => this.setAndSaveToken(authResponse.token)))
+  }
 
+  public register(registerRequest: RegisterRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.baseUrl}${this.path}register`, registerRequest)
+      .pipe(tap(authResponse => this.setAndSaveToken(authResponse.token)))
+  }
+
+  public logout(): void {
+    this.setAndSaveToken(null);
+  }
 
 }

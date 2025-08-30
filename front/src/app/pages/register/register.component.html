@@ -1,0 +1,55 @@
+<app-auth-layout title="S’inscrire">
+
+  <form [formGroup]="form" class="space-y-5" (ngSubmit)="onSubmitRegister()">
+
+    <div class="form-group">
+      <label for="userName">Nom d’utilisateur</label>
+      <input type="text" id="userName" class="form-control" formControlName="userName">
+      @let ide = form.get('userName');
+      @if (ide?.invalid && (ide?.touched || ide?.dirty)) {
+        <div class="validation-message">Veuillez saisir nom d’utilisateur
+          <ul>
+            <li>100 caractères maximum</li>
+          </ul>
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="email">Adresse e-mail</label>
+      <input type="email" id="email" class="form-control" formControlName="email">
+      @let emaile = form.get('email');
+      @if (emaile?.invalid && (emaile?.touched || emaile?.dirty)) {
+        <div class="validation-message">Veuillez saisir une adresse e-mail valide</div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+      <input type="password" id="password" class="form-control" formControlName="password">
+      @let pwde = form.get('password');
+      @if (pwde?.invalid && (pwde?.touched || pwde?.dirty)) {
+        <div class="validation-message">Veuillez saisir un mot de passe valide
+          <ul>
+            <li>8 caractères minimum</li>
+            <li>1 chiffre</li>
+            <li>1 majuscule</li>
+            <li>1 caractère spécial</li>
+          </ul>
+        </div>
+      }
+    </div>
+
+    @if (errorMessage) {
+    <div class="bg-red-400 rounded-xs text-white p-2 text-center font-bold">
+      {{errorMessage}}
+    </div>
+    }
+
+    <div class="flex justify-center py-5">
+      <button type="submit" class="btn-plain" [disabled]="form.invalid">S’inscrire</button>
+    </div>
+  </form>
+
+
+</app-auth-layout>

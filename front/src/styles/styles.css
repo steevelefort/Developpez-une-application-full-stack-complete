@@ -1,6 +1,9 @@
 @config "../../tailwind.config.js";
 @import "tailwindcss";
 
+* {
+  font-family: "Inter", sans-serif;
+}
 
 html,
 body {
@@ -13,9 +16,38 @@ body {
 }
 
 .btn-plain {
-  @apply bg-purple rounded-xs px-5 py-1 text-white font-bold cursor-pointer w-48;
+  @apply bg-purple rounded-xs px-4 py-2 text-white font-bold cursor-pointer w-36;
+}
+
+.btn-plain:disabled {
+  @apply bg-grey;
 }
 
 .btn-outline {
   @apply rounded-xs px-5 py-1 text-black border font-bold cursor-pointer w-48;
 }
+
+form {
+  @apply flex-col items-center max-w-full w-10/12 md:w-3xs;
+}
+
+.form-group {
+  @apply flex flex-col;
+}
+
+.form-control {
+  @apply rounded-xs border border-black px-5 py-2;
+}
+
+input.ng-invalid.ng-touched {
+  @apply border-red-500 ring-1 ring-red-500;
+}
+
+.validation-message {
+  @apply text-red-500 text-xs;
+}
+
+.validation-message>ul {
+  @apply list-disc pl-4;
+}
+

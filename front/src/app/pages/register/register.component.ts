@@ -2,16 +2,17 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthLayoutComponent } from "src/app/components/layouts/auth-layout/auth-layout.component";
-import { LoginRequest } from 'src/app/models/Auth';
+import { LoginRequest, RegisterRequest } from 'src/app/models/Auth';
 import { AuthService } from 'src/app/services/auth.service';
+import { passwordValidator } from 'src/app/validators/password-validator';
 
 @Component({
   selector: 'app-login',
   imports: [AuthLayoutComponent, ReactiveFormsModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.css'
 })
-export class LoginComponent {
+export class RegisterComponent {
 
   form: FormGroup;
   errorMessage: string|null = null;
@@ -22,17 +23,16 @@ export class LoginComponent {
     private router: Router
   ) {
     this.form = fb.group({
-      identifier: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      userName: ['', [Validators.required,Validators.maxLength(100)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
+      password: ['', [Validators.required, passwordValidator()]],
     })
   }
 
-  onSubmitLogin(): void {
-    console.log("Login form submitted");
+  onSubmitRegister(): void {
     if (this.form.valid) {
-      console.log("Login form valid");
-      const loginRequest: LoginRequest = this.form.getRawValue();
-      this.authService.login(loginRequest).subscribe(
+      const registerRequest: RegisterRequest = this.form.getRawValue();
+      this.authService.register(registerRequest).subscribe(
         {
           next: () => {
             this.router.navigateByUrl('/feed')

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth-layout',
@@ -10,4 +11,9 @@ export class AuthLayoutComponent {
 
   @Input() title = '';
 
+  constructor(private router: Router) { }
+
+  backHome() {
+    this.router.navigateByUrl("/");
+  }
 }

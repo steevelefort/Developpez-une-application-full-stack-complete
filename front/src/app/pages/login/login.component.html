@@ -1,14 +1,35 @@
 <app-auth-layout title="Se connecter">
 
-  <div class="flex flex-col max-w-full w-10/12 md:w-3xs">
-    <label for="identifier">E-mail ou nom d’utilisateur</label>
-    <input type="text" id="identifier" class="rounded-xs border border-black px-5 py-2">
-  </div>
+  <form [formGroup]="form" class="space-y-5" (ngSubmit)="onSubmitLogin()">
 
+    <div class="form-group">
+      <label for="identifier">E-mail ou nom d’utilisateur</label>
+      <input type="text" id="identifier" class="form-control" formControlName="identifier">
+      @let ide = form.get('identifier');
+      @if (ide?.invalid && (ide?.touched || ide?.dirty)) {
+        <div class="validation-message">Veuillez saisir votre adresse email ou votre nom d’utilisateur</div>
+      }
+    </div>
 
-  <form [formGroup]="form"></form>
-  <div class="flex space-x-0 md:space-x-12 space-y-4 md:space-y-0 flex-col md:flex-row justify-center items-center">
-    <button class="btn-plain">Se connecter</button>
-  </div>
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+      <input type="password" id="password" class="form-control" formControlName="password">
+      @let pwde = form.get('password');
+      @if (pwde?.invalid && (pwde?.touched || pwde?.dirty)) {
+        <div class="validation-message">Veuillez votre mot de passe</div>
+      }
+    </div>
+
+    @if (errorMessage) {
+    <div class="bg-red-400 rounded-xs text-white p-2 text-center font-bold">
+      {{errorMessage}}
+    </div>
+    }
+
+    <div class="flex justify-center py-5">
+      <button type="submit" class="btn-plain" [disabled]="form.invalid">Se connecter</button>
+    </div>
+  </form>
+
 
 </app-auth-layout>
