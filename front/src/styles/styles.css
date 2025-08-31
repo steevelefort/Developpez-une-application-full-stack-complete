@@ -31,15 +31,25 @@ form {
   @apply flex-col items-center max-w-full w-10/12 md:w-3xs;
 }
 
+.form-large {
+  @apply flex-col items-center max-w-full w-10/12 md:w-2xs;
+}
+
+.form-large .form-control {
+  @apply border-purple;
+}
+
 .form-group {
   @apply flex flex-col;
 }
 
 .form-control {
-  @apply rounded-xs border border-black px-5 py-2;
+  @apply rounded-xs border border-black px-5 py-2 placeholder-gray-400;
 }
 
-input.ng-invalid.ng-touched {
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
   @apply border-red-500 ring-1 ring-red-500;
 }
 
@@ -50,4 +60,3 @@ input.ng-invalid.ng-touched {
 .validation-message>ul {
   @apply list-disc pl-4;
 }
-

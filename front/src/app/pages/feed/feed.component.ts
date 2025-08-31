@@ -2,10 +2,11 @@ import { Component, computed, OnInit, signal } from '@angular/core';
 import { UserLayoutComponent } from "src/app/components/layouts/user-layout/user-layout.component";
 import { FeedService } from 'src/app/services/feed.service';
 import { ArticleCardComponent } from "src/app/components/article-card/article-card.component";
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-feed',
-  imports: [UserLayoutComponent, ArticleCardComponent],
+  imports: [UserLayoutComponent, ArticleCardComponent, RouterLink],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.css'
 })
@@ -15,7 +16,6 @@ export class FeedComponent implements OnInit {
   sortDesc = signal(true);
 
   articles = computed(() => {
-    console.log("sort")
     const sortedFeed = [...this.feedService.feed()];
 
     return sortedFeed.sort(

@@ -8,6 +8,8 @@ import { guestGuard } from './guards/guest.guard';
 import { RegisterComponent } from './pages/register/register.component';
 import { ThemesComponent } from './pages/themes/themes.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { ArticleAddComponent } from './pages/article-add/article-add.component';
+import { ErrorComponent } from './pages/error/error.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [guestGuard] },
@@ -16,6 +18,8 @@ export const routes: Routes = [
   { path: 'feed', component: FeedComponent, canActivate: [authGuard] },
   { path: 'themes', component: ThemesComponent, canActivate: [authGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
+  { path: 'add-article', component: ArticleAddComponent, canActivate: [authGuard] },
+  { path: '**', component: ErrorComponent},
 ];
 
 @NgModule({

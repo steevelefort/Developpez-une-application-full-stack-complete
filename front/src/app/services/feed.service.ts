@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Article } from '../models/Article';
+import { Article, ArticleRequest } from '../models/Article';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
@@ -21,6 +21,11 @@ export class FeedService {
   public loadFeed(): Observable<Article[]> {
     return this.http.get<Article[]>(`${this.baseUrl}${this.path}/feed`)
       .pipe(tap(feedResponse => this._feed.set(feedResponse)))
+  }
+
+  public create(articleRequest: ArticleRequest): Observable<Article> {
+    return this.http.post<Article>(`${this.baseUrl}${this.path}`, articleRequest)
+      // .pipe(tap(articleResponse => this._feed.set(articleResponse)))
   }
 
 }

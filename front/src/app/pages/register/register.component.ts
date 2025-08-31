@@ -23,9 +23,9 @@ export class RegisterComponent {
     private router: Router
   ) {
     this.form = fb.group({
-      userName: ['', [Validators.required,Validators.maxLength(100)]],
-      email: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
-      password: ['', [Validators.required, passwordValidator()]],
+      userName: ['', [Validators.required,Validators.maxLength(100),Validators.pattern(/.*\S.*/)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(255),Validators.pattern(/.*\S.*/)]],
+      password: ['', [Validators.required, passwordValidator(),Validators.pattern(/.*\S.*/)]],
     })
   }
 
@@ -38,8 +38,8 @@ export class RegisterComponent {
             this.router.navigateByUrl('/feed')
             this.errorMessage = null;
           },
-          error: (error) => {
-            this.errorMessage = error.error.error
+          error: () => {
+            this.errorMessage = "Une erreur est survenue, veuillez essayer à nouveau dans un instant.";
           }
         }
       );

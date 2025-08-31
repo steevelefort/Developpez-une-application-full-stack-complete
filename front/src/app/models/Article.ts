@@ -7,3 +7,9 @@ export interface Article {
   createdAt: Date,
   updatedAt: Date,
 }
+
+export interface ArticleRequest {
+  title: String,
+  content: String,
+  themeId: Number
+}
