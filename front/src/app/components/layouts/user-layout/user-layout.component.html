@@ -4,9 +4,18 @@
     <div class="flex">
       <app-drawer>
         <li class="cursor-pointer text-red-800 text-xs font-bold">Se déconnecter</li>
-        <li class="px-3 py-1 cursor-pointer" (click)="onClickArticles()">Articles</li>
-        <li class="px-3 py-1 cursor-pointer" (click)="onClickThemes()">Thèmes</li>
-        <li class="md:pr-5 cursor-pointer" (click)="onClickProfile()"><img src="/assets/user.png" alt="" class="w-12 h-12"></li>
+        <li class="px-3 py-1">
+          <a [routerLink]="['/feed']" routerLinkActive="text-purple">Articles</a>
+        </li>
+        <li class="px-3 py-1">
+          <a [routerLink]="['/themes']" routerLinkActive="text-purple">Thèmes</a>
+        </li>
+        <li class="md:pr-5 cursor-pointer">
+
+          <a [routerLink]="['/themes']" routerLinkActive="text-purple" #link="routerLinkActive">
+            <img [src]="link.isActive ? '/assets/user-selected.png' : '/assets/user.png'" alt="" class="w-12 h-12">
+          </a>
+        </li>
       </app-drawer>
     </div>
   </div>

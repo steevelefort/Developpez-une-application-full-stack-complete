@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { DrawerComponent } from "../../drawer/drawer.component";
 
 @Component({
   selector: 'app-user-layout',
-  imports: [DrawerComponent],
+  imports: [DrawerComponent, RouterModule],
   templateUrl: './user-layout.component.html',
   styleUrl: './user-layout.component.css'
 })
