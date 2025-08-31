@@ -3,11 +3,11 @@
     <img src="/assets/logo_p6.png" alt="logo" class="w-24 md:w-32 ml-3" />
     <div class="flex">
       <app-drawer>
-        <li class="cursor-pointer text-red-800 text-xs font-bold">Se déconnecter</li>
-        <li class="px-3 py-1">
+        <li class="cursor-pointer text-red-800 text-sm font-bold" (click)="onLogout()">Se déconnecter</li>
+        <li class="px-3 py-1 text-xl">
           <a [routerLink]="['/feed']" routerLinkActive="text-purple">Articles</a>
         </li>
-        <li class="px-3 py-1">
+        <li class="px-3 py-1 text-xl">
           <a [routerLink]="['/themes']" routerLinkActive="text-purple">Thèmes</a>
         </li>
         <li class="md:pr-5 cursor-pointer">

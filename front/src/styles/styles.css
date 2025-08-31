@@ -16,7 +16,7 @@ body {
 }
 
 .btn-plain {
-  @apply bg-purple rounded-xs px-4 py-2 text-white font-bold cursor-pointer w-36;
+  @apply bg-purple rounded-xs px-4 py-2 text-white text-base font-bold cursor-pointer;
 }
 
 .btn-plain:disabled {
@@ -24,7 +24,7 @@ body {
 }
 
 .btn-outline {
-  @apply rounded-xs px-5 py-1 text-black border font-bold cursor-pointer w-48;
+  @apply rounded-xs px-5 py-1 text-black border text-base md:font-bold cursor-pointer;
 }
 
 form {
