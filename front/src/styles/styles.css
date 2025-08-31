@@ -47,6 +47,11 @@ form {
   @apply rounded-xs border border-black px-5 py-2 placeholder-gray-400;
 }
 
+
+.form-control-tight {
+  @apply rounded-xs border border-black md:px-5 py-2 w-full placeholder-gray-400;
+}
+
 input.ng-invalid.ng-touched,
 select.ng-invalid.ng-touched,
 textarea.ng-invalid.ng-touched {

@@ -1,0 +1,76 @@
+<app-user-layout>
+
+  <!-- <main class="flex w-full md:max-w-4xl p-4 md:p-0 md:pl-16 md:pr-6 bg-amber-100"> -->
+  <main class="flex w-full p-4 md:p-0 md:pl-16 md:pr-6 text-xl">
+    <div class="grow">
+
+      <div class="flex my-5 md:items-center relative">
+
+        <a [routerLink]="['/feed']" class="md:absolute md:-left-17">
+          <img src="/assets/arrow.svg" alt="" class="w-10 md:ml-4 mr-8 mt-1 cursor-pointer">
+        </a>
+        <h1 class="font-bold w-full text-2xl">{{article?.title}}</h1>
+
+      </div>
+
+      <div class="flex py-1 md:py-3 justify-start flex-wrap">
+        <div class="mb-3 md:mb-0 w-1/2 md:w-auto md:mr-8 line-clamp-1 text-ellipsis">
+          Date: <span class="font-bold">{{article?.createdAt | date:'dd/MM/yyyy'}}</span>
+        </div>
+        <div class="mb-3 md:mb-0 w-1/2 md:w-auto md:mr-8 text-ellipsis">Auteur: <span
+            class="font-bold">{{article?.userName}}</span>
+        </div>
+        <div class="mb-3 md:mb-0 w-1/2 md:w-auto text-ellipsis">Theme: <span
+            class="font-bold">{{article?.themeName}}</span>
+        </div>
+      </div>
+
+      <p>
+        {{article?.content}}
+      </p>
+
+      <hr class="my-4">
+
+      <h2 class="text-xl mb-4">Commentaires</h2>
+
+      <div class="md:pl-12">
+
+        @for (comment of article?.comments; track comment.id) {
+        <div class="flex flex-col md:flex-row md:pr-24 py-2" >
+          <div class="text-right pb-1 md:pr-4">{{comment.userName}}</div>
+          <div class="rounded-xs bg-grey-200 p-3 grow">{{comment.content}}</div>
+        </div>
+        }
+
+
+        <form [formGroup]="form" class="flex-row !w-full" (ngSubmit)="onSubmitCreate()">
+
+          <div class="flex">
+
+            <div class="form-group grow">
+              <textarea class="form-control-tight" formControlName="content" placeholder="Écrivez ici votre commentaire"
+                rows="3"></textarea>
+              @let contente = form.get('content');
+              @if (contente?.invalid && (contente?.touched || contente?.dirty)) {
+              <div class="validation-message">Veuillez saisir le contenu du commentaire</div>
+              }
+            </div>
+
+            <button type="submit" class="md:p-6" [disabled]="form.invalid">
+              <img src="/assets/icon-send.png" alt="" class="min-w-11 w-11 h-11">
+            </button>
+
+          </div>
+        </form>
+
+        @if (errorMessage) {
+        <div class="bg-red-400 rounded-xs text-white p-2 text-center font-bold">
+          {{errorMessage}}
+        </div>
+        }
+
+      </div>
+    </div>
+  </main>
+
+</app-user-layout>

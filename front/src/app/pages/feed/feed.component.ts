@@ -3,6 +3,7 @@ import { UserLayoutComponent } from "src/app/components/layouts/user-layout/user
 import { FeedService } from 'src/app/services/feed.service';
 import { ArticleCardComponent } from "src/app/components/article-card/article-card.component";
 import { Router, RouterLink } from '@angular/router';
+import { Article } from 'src/app/models/Article';
 
 @Component({
   selector: 'app-feed',
@@ -13,27 +14,31 @@ import { Router, RouterLink } from '@angular/router';
 export class FeedComponent implements OnInit {
 
   errorMessage: String | null = null;
-  sortDesc = signal(true);
+  // sortDesc = signal(true);
+  sortDesc = true;
 
-  articles = computed(() => {
-    const sortedFeed = [...this.feedService.feed()];
+  articles: Article[] = []
 
-    return sortedFeed.sort(
-      (a, b) => {
-        const dateA = new Date(a.createdAt).getTime();
-        const dateB = new Date(b.createdAt).getTime();
-        return this.sortDesc() ? dateB - dateA : dateA - dateB;
-      }
-    );
-  })
+  // articles = computed(() => {
+  //   const sortedFeed = [...this.feedService.feed()];
+  //
+  //   return sortedFeed.sort(
+  //     (a, b) => {
+  //       const dateA = new Date(a.createdAt).getTime();
+  //       const dateB = new Date(b.createdAt).getTime();
+  //       return this.sortDesc() ? dateB - dateA : dateA - dateB;
+  //     }
+  //   );
+  // })
 
   constructor(private feedService: FeedService) { }
 
   ngOnInit(): void {
     this.feedService.loadFeed().subscribe({
-      next: () => {
+      next: (feed) => {
+        this.articles = feed;
         this.errorMessage = null;
-        console.log(this.feedService.feed())
+        // console.log(this.feedService.feed())
       },
       error: (error) => {
         this.errorMessage = error.toString();
@@ -43,7 +48,18 @@ export class FeedComponent implements OnInit {
 
   onSort() {
     console.log("onSort")
-    this.sortDesc.set(!this.sortDesc());
+    this.sortDesc = !this.sortDesc;
+
+    this.articles = this.articles.sort(
+      (a, b) => {
+        const dateA = new Date(a.createdAt).getTime();
+        const dateB = new Date(b.createdAt).getTime();
+        return this.sortDesc ? dateB - dateA : dateA - dateB;
+      }
+    );
   }
 
 }
+
+
+

@@ -12,6 +12,7 @@ module.exports = {
         grey: {
           DEFAULT: '#939393',
           '100': '#F5F5F5',
+          '200': '#EEEEEE',
         }
       },
       borderRadius: {

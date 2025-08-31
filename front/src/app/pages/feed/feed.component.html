@@ -4,14 +4,15 @@
     <a [routerLink]="['/add-article']" class="btn-plain">Créer un article</a>
     <div class="text-base font-bold flex items-center pt-4 md:pt-0 cursor-pointer" (click)="onSort()">
       Trier par
-      <i class="material-icons cursor-pointer">{{sortDesc() ? 'south' : 'north'}}</i>
+      <i class="material-icons cursor-pointer">{{sortDesc ? 'south' : 'north'}}</i>
     </div>
   </div>
 
   <section class="flex flex-wrap">
-    @for (article of articles(); track article.id) {
+    @for (article of articles; track article.id) {
     <app-article-card [article]="article" class=" w-full md:w-1/2" />
     }
   </section>
 
 </app-user-layout>
+

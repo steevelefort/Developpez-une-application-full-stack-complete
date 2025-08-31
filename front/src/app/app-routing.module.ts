@@ -10,6 +10,7 @@ import { ThemesComponent } from './pages/themes/themes.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ArticleAddComponent } from './pages/article-add/article-add.component';
 import { ErrorComponent } from './pages/error/error.component';
+import { ArticleViewComponent } from './pages/article-view/article-view.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [guestGuard] },
@@ -19,6 +20,7 @@ export const routes: Routes = [
   { path: 'themes', component: ThemesComponent, canActivate: [authGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
   { path: 'add-article', component: ArticleAddComponent, canActivate: [authGuard] },
+  { path: 'view-article/:id', component: ArticleViewComponent, canActivate: [authGuard] },
   { path: '**', component: ErrorComponent},
 ];
 
