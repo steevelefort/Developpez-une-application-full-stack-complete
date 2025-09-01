@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, Injectable, signal } from '@angular/core';
-import { AuthResponse, LoginRequest, RegisterRequest } from '../models/Auth';
+import { AuthResponse, LoginRequest, RegisterRequest} from '../models/Auth';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -15,6 +15,7 @@ export class AuthService {
   private _token = signal<string | null>(localStorage.getItem('token'));
   readonly token = this._token.asReadonly();
   readonly isAuthenticated = computed(() => !!this._token());
+
 
   constructor(private http: HttpClient) {
   }
@@ -41,5 +42,6 @@ export class AuthService {
   public logout(): void {
     this.setAndSaveToken(null);
   }
+
 
 }

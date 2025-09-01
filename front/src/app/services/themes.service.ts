@@ -19,6 +19,7 @@ export class ThemesService {
   }
 
   public loadthemes(): Observable<Theme[]> {
+    console.log("chargement des thèmes")
     return this.http.get<Theme[]>(`${this.baseUrl}${this.path}`)
       .pipe(tap(themesResponse => this._themes.set(themesResponse)))
   }

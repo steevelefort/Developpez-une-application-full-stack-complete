@@ -43,15 +43,19 @@ export class ArticleAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("chargement des thèmes")
-    this.themesService.loadthemes().subscribe(
-      {
-        next: () => {
-          console.log("Chargement des thèmes terminé")
-        },
-        error: (error) => { console.log(error.getMessage()) }
-      }
-    );
+    if (this.themesService.themes().length === 0) {
+      this.themesService.loadthemes().subscribe(
+        {
+          next: () => {
+            this.errorMessage = null;
+          },
+          error: (error) => {
+            console.log(error.getMessage())
+            this.errorMessage = "Une erreur est survenue, veuillez essayer à nouveau dans un instant.";
+          }
+        }
+      );
+    }
   }
 
   onSubmitCreate() {
