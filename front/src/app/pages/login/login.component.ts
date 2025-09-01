@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent {
 
   form: FormGroup;
-  errorMessage: string|null = null;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -28,9 +28,7 @@ export class LoginComponent {
   }
 
   onSubmitLogin(): void {
-    console.log("Login form submitted");
     if (this.form.valid) {
-      console.log("Login form valid");
       const loginRequest: LoginRequest = this.form.getRawValue();
       this.authService.login(loginRequest).subscribe(
         {
@@ -39,7 +37,12 @@ export class LoginComponent {
             this.errorMessage = null;
           },
           error: (error) => {
-            this.errorMessage = error.error.error
+            console.log(error)
+            if (error?.error?.error) {
+              this.errorMessage = error.error.error
+            } else {
+              this.errorMessage = "Une erreur est survenue, veuillez essayer à nouveau dans un instant.";
+            }
           }
         }
       );

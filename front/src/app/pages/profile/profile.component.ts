@@ -4,7 +4,6 @@ import { ThemesService } from 'src/app/services/themes.service';
 import { UserService } from 'src/app/services/user.service';
 import { ThemeCardComponent } from "src/app/components/theme-card/theme-card.component";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
 import { passwordValidator } from 'src/app/validators/password-validator';
 import { RegisterRequest } from 'src/app/models/Auth';
 
@@ -25,7 +24,6 @@ export class ProfileComponent {
     public themesService: ThemesService,
     public userService: UserService,
     private fb: FormBuilder,
-    private authService: AuthService,
   ) {
     this.form = fb.group({
       userName: ['', [Validators.required, Validators.maxLength(100), Validators.pattern(/.*\S.*/)]],
@@ -36,7 +34,7 @@ export class ProfileComponent {
 
   fillForm(): void {
     const user = this.userService.user();
-    if (user != null) {
+    if (user) {
       this.form.patchValue({
         userName: user.userName,
         email: user.email,
@@ -76,7 +74,6 @@ export class ProfileComponent {
   }
 
   onUnSubscribe(themeId: Number) {
-    console.log("unsubscribe")
     this.userService.unSubscribe(themeId).subscribe({
       next: () => {
         this.errorMessage = null;
@@ -88,7 +85,6 @@ export class ProfileComponent {
   }
 
   onSaveProfile(): void {
-    console.log("Sauvegarde du profil")
     if (this.form.valid) {
       const registerRequest: RegisterRequest = this.form.getRawValue();
       this.userService.update(registerRequest).subscribe(
@@ -99,8 +95,7 @@ export class ProfileComponent {
             setTimeout(() => { this.successMessage = null }, 1000)
           },
           error: (error) => {
-            console.log(error.error)
-            if (error != undefined && error != null && error.error != undefined && error.error.error != undefined) {
+            if (error?.error?.error) {
               this.errorMessage = error.error.error;
             } else {
               this.errorMessage = "Une erreur est survenue, veuillez essayer à nouveau dans un instant.";

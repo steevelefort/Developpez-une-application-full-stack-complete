@@ -50,7 +50,6 @@ export class ArticleAddComponent implements OnInit {
             this.errorMessage = null;
           },
           error: (error) => {
-            console.log(error.getMessage())
             this.errorMessage = "Une erreur est survenue, veuillez essayer à nouveau dans un instant.";
           }
         }

@@ -38,7 +38,6 @@ export class FeedComponent implements OnInit {
       next: (feed) => {
         this.articles = feed;
         this.errorMessage = null;
-        // console.log(this.feedService.feed())
       },
       error: (error) => {
         this.errorMessage = error.toString();
@@ -47,7 +46,6 @@ export class FeedComponent implements OnInit {
   }
 
   onSort() {
-    console.log("onSort")
     this.sortDesc = !this.sortDesc;
 
     this.articles = this.articles.sort(

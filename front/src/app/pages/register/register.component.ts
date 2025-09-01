@@ -15,7 +15,7 @@ import { passwordValidator } from 'src/app/validators/password-validator';
 export class RegisterComponent {
 
   form: FormGroup;
-  errorMessage: string|null = null;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -23,9 +23,9 @@ export class RegisterComponent {
     private router: Router
   ) {
     this.form = fb.group({
-      userName: ['', [Validators.required,Validators.maxLength(100),Validators.pattern(/.*\S.*/)]],
-      email: ['', [Validators.required, Validators.email, Validators.maxLength(255),Validators.pattern(/.*\S.*/)]],
-      password: ['', [Validators.required, passwordValidator(),Validators.pattern(/.*\S.*/)]],
+      userName: ['', [Validators.required, Validators.maxLength(100), Validators.pattern(/.*\S.*/)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(255), Validators.pattern(/.*\S.*/)]],
+      password: ['', [Validators.required, passwordValidator(), Validators.pattern(/.*\S.*/)]],
     })
   }
 
@@ -38,8 +38,16 @@ export class RegisterComponent {
             this.router.navigateByUrl('/feed')
             this.errorMessage = null;
           },
-          error: () => {
-            this.errorMessage = "Une erreur est survenue, veuillez essayer à nouveau dans un instant.";
+          error: (error) => {
+            console.log(error.error)
+            if (error?.error) {
+            this.errorMessage = '';
+            if ('userName' in error.error) { this.errorMessage += error.error.userName + "\n" }
+            if ('email' in error.error) { this.errorMessage += error.error.email + "\n" }
+            if ('password' in error.error) { this.errorMessage += error.error.password + "\n" }
+            } else {
+              this.errorMessage = "Une erreur est survenue, veuillez essayer à nouveau dans un instant.";
+            }
           }
         }
       );

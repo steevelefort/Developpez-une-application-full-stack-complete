@@ -6,11 +6,12 @@ import { Router } from '@angular/router';
 
 export const authRedirectInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
+  const authService = inject(AuthService);
 
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
       if (err.status === 401 || err.status === 403) {
-        inject(AuthService).logout();
+        authService.logout();
         router.navigateByUrl('/login');
       }
       return throwError(() => err);

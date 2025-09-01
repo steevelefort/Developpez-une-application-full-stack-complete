@@ -12,7 +12,6 @@ export class DrawerComponent {
   isOpen = false;
 
   toggle() {
-    console.log("Toggle!")
     this.isOpen = !this.isOpen;
   }
 
