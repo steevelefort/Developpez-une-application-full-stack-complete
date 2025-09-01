@@ -7,3 +7,12 @@ export interface UserResponse {
   subscriptions: Number[];
 }
 
+export interface UserUpdateResponse {
+  id: Number;
+  userName: String;
+  email: String;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+

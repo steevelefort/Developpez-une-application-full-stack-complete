@@ -1,0 +1,16 @@
+<div class="py-2 px-4 rounded-xs bg-grey-200 ">
+  <h2 class="text-base font-bold">{{theme.name}}</h2>
+  <p class="line-clamp-3 text-sm my-2">Description: {{theme.description}}</p>
+  <div class="text-center">
+    <button *ngIf="userService.user()?.subscriptions?.includes(theme.id); else disabled"
+      class="btn-plain w-42" [ngClass]="{'!cursor-not-allowed':!canUnSubstribe}"
+      (click)="onClickUnSubscribe(theme.id)"
+      [disabled]="!canUnSubstribe">
+      {{!canUnSubstribe ? 'Déja abonné' : 'Se désabonner'}}
+    </button>
+    <ng-template #disabled>
+      <button (click)="onClickSubscribe(theme.id)" class="btn-plain md:w-42"
+        [ngClass]="{'!cursor-not-allowed':canUnSubstribe}" [disabled]="canUnSubstribe">S’abonner</button>
+    </ng-template>
+  </div>
+</div>
