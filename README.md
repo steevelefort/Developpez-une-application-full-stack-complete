@@ -89,6 +89,11 @@ L’API sera accessible sur :
 | `SERVER_PORT`     | Port de l’API (optionnel, par défaut `8080`)                         | `3001`                            |
 
 
+### Documentation de l’API
+
+La documentation de l’API est disponible à l’adresse : 
+http://localhost:8080/swagger-ui/index.html
+
 ---
 
 ## Front-End (Angular)

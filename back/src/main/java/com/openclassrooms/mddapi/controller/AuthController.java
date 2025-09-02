@@ -17,6 +17,7 @@ import com.openclassrooms.mddapi.dto.response.AuthResponse;
 // import com.openclassrooms.mddapi.dto.response.UserResponse;
 import com.openclassrooms.mddapi.service.UserService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import jakarta.validation.Valid;
 
 // @CrossOrigin(origins = "*", maxAge = 3600)
@@ -24,6 +25,7 @@ import jakarta.validation.Valid;
  * Auth controller.
  */
 @RestController
+@SecurityRequirements({})
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -46,6 +48,7 @@ public class AuthController {
    * @param request login data
    * @return auth response
    */
+  @SecurityRequirements({})
   @PostMapping(value = "/login", produces = "application/json")
   public AuthResponse login(@Valid @RequestBody UserLoginRequest request) {
     return userService.login(request);
