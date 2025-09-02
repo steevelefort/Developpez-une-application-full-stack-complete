@@ -1,0 +1,80 @@
+<app-user-layout>
+
+  <main class="flex flex-col p-3 justify-center items-center">
+
+    <h1 class="text-2xl font-bold">Profil utilisateur</h1>
+
+
+    <form [formGroup]="form" class="space-y-5 form-large" (ngSubmit)="onSaveProfile()">
+
+      <div class="form-group">
+        <input type="text" id="userName" class="form-control" formControlName="userName" placeholder="Nom d’utilisateur">
+        @let ide = form.get('userName');
+        @if (ide?.invalid && (ide?.touched || ide?.dirty)) {
+        <div class="validation-message">Veuillez saisir nom d’utilisateur
+          <ul>
+            <li>100 caractères maximum</li>
+          </ul>
+        </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <input type="email" id="email" class="form-control" formControlName="email" placeholder="Adresse e-mail">
+        @let emaile = form.get('email');
+        @if (emaile?.invalid && (emaile?.touched || emaile?.dirty)) {
+        <div class="validation-message">Veuillez saisir une adresse e-mail valide</div>
+        }
+      </div>
+
+      <div class="form-group">
+        <input type="password" id="password" class="form-control" formControlName="password" placeholder="Mot de passe">
+        @let pwde = form.get('password');
+        @if (pwde?.invalid && (pwde?.touched || pwde?.dirty)) {
+        <div class="validation-message">Veuillez saisir un mot de passe valide
+          <ul>
+            <li>8 caractères minimum</li>
+            <li>1 chiffre</li>
+            <li>1 majuscule</li>
+            <li>1 caractère spécial</li>
+          </ul>
+        </div>
+        }
+      </div>
+
+      @if (successMessage) {
+      <div class="bg-green-600 rounded-xs text-white p-2 text-center font-bold">
+        {{successMessage}}
+      </div>
+      }
+
+      @if (errorMessage) {
+      <div class="bg-red-400 rounded-xs text-white p-2 text-center font-bold">
+        {{errorMessage}}
+      </div>
+      }
+
+      <div class="flex justify-center pb-4">
+        <button type="submit" class="btn-plain" [disabled]="form.invalid">Sauvegarder</button>
+      </div>
+
+
+    </form>
+
+    <hr class="w-full md:w-10/12">
+
+    <h1 class="text-2xl font-bold">Abonnements</h1>
+
+
+    <section class="flex flex-wrap justify-center">
+      @for (theme of subscribedThemes(); track theme.id) {
+      <app-theme-card [theme]="theme" (onUnSubscribe)="onUnSubscribe(theme.id)" [canUnSubstribe]="true"
+        class="p-2 w-full md:w-1/2 " />
+      }
+    </section>
+
+  </main>
+
+
+
+</app-user-layout>

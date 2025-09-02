@@ -1,0 +1,35 @@
+<app-auth-layout title="Se connecter">
+
+  <form [formGroup]="form" class="space-y-5" (ngSubmit)="onSubmitLogin()">
+
+    <div class="form-group">
+      <label for="identifier">E-mail ou nom d’utilisateur</label>
+      <input type="text" id="identifier" class="form-control" formControlName="identifier">
+      @let ide = form.get('identifier');
+      @if (ide?.invalid && (ide?.touched || ide?.dirty)) {
+        <div class="validation-message">Veuillez saisir votre adresse email ou votre nom d’utilisateur</div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+      <input type="password" id="password" class="form-control" formControlName="password">
+      @let pwde = form.get('password');
+      @if (pwde?.invalid && (pwde?.touched || pwde?.dirty)) {
+        <div class="validation-message">Veuillez votre mot de passe</div>
+      }
+    </div>
+
+    @if (errorMessage) {
+    <div class="bg-red-400 rounded-xs text-white p-2 text-center font-bold">
+      {{errorMessage}}
+    </div>
+    }
+
+    <div class="flex justify-center py-5">
+      <button type="submit" class="btn-plain" [disabled]="form.invalid">Se connecter</button>
+    </div>
+  </form>
+
+
+</app-auth-layout>
