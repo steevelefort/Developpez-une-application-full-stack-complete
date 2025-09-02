@@ -20,6 +20,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Comment entity that represents a comment on an article
+ */
 @Entity
 @Data
 @Table(name = "COMMENTS")

@@ -10,6 +10,9 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
+/**
+ * JWT service.
+ */
 @Service
 public class JwtService {
 
@@ -23,11 +26,10 @@ public class JwtService {
   }
 
   /**
-   * Generates a JSON Web Token from an email and user id
-   *
-   * @param email an email address
-   * @param id a user id
-   * @return String a json web token
+   * Generate token.
+   * @param email user email
+   * @param id user id
+   * @return jwt token
    */
   public String generateToken(String email, Long id) {
     Instant now = Instant.now();

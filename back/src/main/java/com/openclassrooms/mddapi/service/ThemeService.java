@@ -7,13 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.response.ThemeResponse;
-// import com.openclassrooms.mddapi.dto.ThemeDto;
 import com.openclassrooms.mddapi.mapper.ThemeMapper;
 import com.openclassrooms.mddapi.model.Theme;
 import com.openclassrooms.mddapi.repository.ThemeRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
+/**
+ * Theme service.
+ */
 @Service
 public class ThemeService {
 
@@ -23,18 +25,26 @@ public class ThemeService {
   @Autowired
   ThemeMapper themeMapper;
 
+  /**
+   * Find all themes.
+   * @return list of themes
+   */
   public List<ThemeResponse> findAll() {
     return themeMapper.toResponseList(themeRepository.findAll());
   }
 
+  /**
+   * Find theme by id.
+   * @param id theme id
+   * @return theme data
+   */
   public ThemeResponse findById(Long id) {
     Theme theme = themeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
     return themeMapper.toResponse(theme);
   }
 
   /**
-   * Seed some Themes in the database if empty
-   * Automatically runs at start by configuration/DataSeeder.java
+   * Seed themes data.
    */
   public void seedData() {
     if (themeRepository.count() == 0) {

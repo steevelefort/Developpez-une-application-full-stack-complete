@@ -11,7 +11,6 @@ import org.springframework.web.server.ResponseStatusException;
 import com.openclassrooms.mddapi.dto.request.CommentRequest;
 import com.openclassrooms.mddapi.dto.response.CommentResponse;
 import com.openclassrooms.mddapi.mapper.CommentRequestMapper;
-// import com.openclassrooms.mddapi.dto.CommentDto;
 import com.openclassrooms.mddapi.mapper.CommentResponseMapper;
 import com.openclassrooms.mddapi.model.Article;
 import com.openclassrooms.mddapi.model.Comment;
@@ -22,6 +21,9 @@ import com.openclassrooms.mddapi.repository.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
+/**
+ * Comment service.
+ */
 @Service
 public class CommentService {
 
@@ -40,10 +42,13 @@ public class CommentService {
   @Autowired
   CommentRequestMapper commentRequestMapper;
 
-  // public List<CommentResponse> findByArticle(Long articleId) {
-  //   return commentResponseMapper.toResponseList(commentRepository.findByArticleId(articleId));
-  // }
-
+  /**
+   * Create new comment.
+   * @param request comment data
+   * @param articleId article id
+   * @param userId user id
+   * @return created comment
+   */
   public CommentResponse create(CommentRequest request, Long articleId, Long userId){
     Article article = articleRepository.findById(articleId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Article introuvable"));
     User user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
@@ -54,10 +59,5 @@ public class CommentService {
     Comment savedComment = commentRepository.save(comment);
     return commentResponseMapper.toResponse(savedComment);
   }
-
-  // public CommentResponse findById(Long id) {
-  //   Comment comment = themeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
-  //   return commentResponseMapper.toResponse(theme);
-  // }
 
 }

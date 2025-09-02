@@ -23,6 +23,9 @@ import com.openclassrooms.mddapi.repository.ArticleRepository;
 
 import jakarta.validation.Valid;
 
+/**
+ * Article service.
+ */
 @Service
 public class ArticleService {
 
@@ -44,6 +47,12 @@ public class ArticleService {
   @Autowired
   ArticleFullResponseMapper articleFullResponseMapper;
 
+  /**
+   * Create new article.
+   * @param request article data
+   * @param userId user id
+   * @return created article
+   */
   public ArticleResponse create(ArticleRequest request, Long userId) {
     Article article = articleRequestMapper.toEntity(request);
     User user = userRepository.findById(userId).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
@@ -54,11 +63,21 @@ public class ArticleService {
     return articleResponseMapper.toResponse(savedArticle);
   }
 
+  /**
+   * Get article by id.
+   * @param id article id
+   * @return article data
+   */
   public ArticleFullResponse getOneById(Long id) {
     Article article = articleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Article introuvable"));
     return articleFullResponseMapper.toResponse(article);
   }
 
+  /**
+   * Get user feed.
+   * @param userId user id
+   * @return list of articles
+   */
   public List<ArticleResponse> getUserFeed(Long userId) {
     List<Article> articles = articleRepository.findUserFeedArticles(userId); 
     return articleResponseMapper.toResponseList(articles);

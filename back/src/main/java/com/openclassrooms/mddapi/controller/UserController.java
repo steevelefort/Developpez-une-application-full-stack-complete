@@ -20,8 +20,7 @@ import com.openclassrooms.mddapi.service.UserService;
 import jakarta.validation.Valid;
 
 /**
- * REST controller for user management operations.
- * Handles user profile, subscriptions and authentication-related endpoints.
+ * User controller.
  */
 // @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -32,10 +31,9 @@ public class UserController {
   UserService userService;
 
   /**
-   * Gets the current authenticated user's profile information.
-   * 
-   * @param jwt the JWT token containing user authentication details
-   * @return UserResponse with current user data
+   * Get current user.
+   * @param jwt user token
+   * @return user data
    */
   @GetMapping(value = "/me", produces = "application/json")
   UserResponse getCurrentUser(@AuthenticationPrincipal Jwt jwt) {
@@ -44,11 +42,10 @@ public class UserController {
   }
 
   /**
-   * Updates the current user's profile information.
-   * 
-   * @param request the user update request containing new profile data
-   * @param jwt the JWT token containing user authentication details  
-   * @return UserResponse with updated user data
+   * Update user.
+   * @param request user data
+   * @param jwt user token
+   * @return updated user
    */
   @PutMapping(value = "/update", produces = "application/json")
   UserResponse update(@Valid @RequestBody UserUpdateRequest request, @AuthenticationPrincipal Jwt jwt) {
@@ -58,11 +55,10 @@ public class UserController {
   }
 
   /**
-   * Subscribes the current user to a specific theme.
-   * 
-   * @param themeId the ID of the theme to subscribe to
-   * @param jwt the JWT token containing user authentication details
-   * @return BasicResponse confirming the subscription
+   * Subscribe to theme.
+   * @param themeId theme id
+   * @param jwt user token
+   * @return success message
    */
   @PostMapping(value = "/subscribe/{themeId}", produces = "application/json")
   BasicResponse subscribe(@PathVariable Long themeId, @AuthenticationPrincipal Jwt jwt) {
@@ -72,11 +68,10 @@ public class UserController {
   }
 
   /**
-   * Unsubscribes the current user from a specific theme.
-   * 
-   * @param themeId the ID of the theme to unsubscribe from
-   * @param jwt the JWT token containing user authentication details
-   * @return BasicResponse confirming the unsubscription
+   * Unsubscribe from theme.
+   * @param themeId theme id
+   * @param jwt user token
+   * @return success message
    */
   @DeleteMapping(value = "/subscribe/{themeId}", produces = "application/json")
   BasicResponse unSubscribe(@PathVariable Long themeId, @AuthenticationPrincipal Jwt jwt) {

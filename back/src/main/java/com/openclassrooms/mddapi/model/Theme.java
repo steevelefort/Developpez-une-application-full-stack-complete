@@ -22,6 +22,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Theme entity that represents a topic users can subscribe to
+ */
 @Entity
 @Data
 @Table(name = "THEMES")

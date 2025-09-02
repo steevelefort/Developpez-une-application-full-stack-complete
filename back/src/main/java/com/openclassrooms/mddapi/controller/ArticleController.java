@@ -28,6 +28,9 @@ import com.openclassrooms.mddapi.service.UserService;
 
 import jakarta.validation.Valid;
 
+/**
+ * Article controller.
+ */
 @RestController
 @RequestMapping("/api/article")
 public class ArticleController {
@@ -38,17 +41,33 @@ public class ArticleController {
   @Autowired
   CommentService commentService;
 
+  /**
+   * Get user feed.
+   * @param jwt user token
+   * @return list of articles
+   */
   @GetMapping(value = "/feed", produces = "application/json")
   List<ArticleResponse> feed(@AuthenticationPrincipal Jwt jwt) {
     Long userId = ((Number) jwt.getClaim("userId")).longValue();
     return articleService.getUserFeed(userId);
   }
 
+  /**
+   * Get one article.
+   * @param articleId article id
+   * @return article data
+   */
   @GetMapping(value = "/{articleId}", produces = "application/json")
   ArticleFullResponse getOne(@PathVariable Long articleId) {
     return articleService.getOneById(articleId);
   }
 
+  /**
+   * Create new article.
+   * @param request article data
+   * @param jwt user token
+   * @return created article
+   */
   @PostMapping(value = "", produces = "application/json")
   ArticleResponse create(@Valid @RequestBody ArticleRequest request, @AuthenticationPrincipal Jwt jwt) {
     Long userId = ((Number) jwt.getClaim("userId")).longValue();
@@ -56,6 +75,13 @@ public class ArticleController {
     return response;
   }
 
+  /**
+   * Add comment to article.
+   * @param request comment data
+   * @param articleId article id
+   * @param jwt user token
+   * @return created comment
+   */
   @PostMapping(value = "/{articleId}/comment", produces = "application/json")
   CommentResponse addCommentToArticle(@Valid @RequestBody CommentRequest request,@PathVariable Long articleId, @AuthenticationPrincipal Jwt jwt) {
     Long userId = ((Number) jwt.getClaim("userId")).longValue();

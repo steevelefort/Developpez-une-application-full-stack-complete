@@ -17,6 +17,9 @@ import com.openclassrooms.mddapi.service.ThemeService;
 import jakarta.validation.Valid;
 
 // @CrossOrigin(origins = "*", maxAge = 3600)
+/**
+ * Theme controller.
+ */
 @RestController
 @RequestMapping("/api/theme")
 public class ThemeController {
@@ -24,11 +27,20 @@ public class ThemeController {
   @Autowired
   ThemeService themeService;
 
+  /**
+   * Get all themes.
+   * @return list of themes
+   */
   @GetMapping("")
   List<ThemeResponse> getAllThemes() {
     return themeService.findAll();
   }
 
+  /**
+   * Get theme by id.
+   * @param id theme id
+   * @return theme data
+   */
   @GetMapping("/{id}")
   ThemeResponse getThemeById(@PathVariable Long id) {
     return themeService.findById(id);

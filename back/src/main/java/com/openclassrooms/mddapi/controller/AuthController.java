@@ -20,6 +20,9 @@ import com.openclassrooms.mddapi.service.UserService;
 import jakarta.validation.Valid;
 
 // @CrossOrigin(origins = "*", maxAge = 3600)
+/**
+ * Auth controller.
+ */
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -27,12 +30,22 @@ public class AuthController {
   @Autowired
   UserService userService;
 
+  /**
+   * Register new user.
+   * @param request user data
+   * @return auth response
+   */
   @PostMapping(value = "/register", produces = "application/json")
   // @SecurityRequirements({})
   public AuthResponse register(@Valid @RequestBody UserRegisterRequest request) {
     return userService.register(request);
   }
 
+  /**
+   * Login user.
+   * @param request login data
+   * @return auth response
+   */
   @PostMapping(value = "/login", produces = "application/json")
   public AuthResponse login(@Valid @RequestBody UserLoginRequest request) {
     return userService.login(request);

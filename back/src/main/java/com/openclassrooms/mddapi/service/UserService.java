@@ -21,6 +21,9 @@ import com.openclassrooms.mddapi.repository.UserRepository;
 
 import jakarta.validation.Valid;
 
+/**
+ * User service.
+ */
 @Service
 public class UserService {
 
@@ -43,6 +46,11 @@ public class UserService {
   @Autowired
   JwtService jwtService;
 
+  /**
+   * Register new user.
+   * @param request user data
+   * @return auth response
+   */
   public AuthResponse register(UserRegisterRequest request) {
     User user = userRegisterMapper.toEntity(request);
     user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -53,6 +61,11 @@ public class UserService {
     return authResponse;
   }
 
+  /**
+   * Login user.
+   * @param request login data
+   * @return auth response
+   */
   public AuthResponse login(UserLoginRequest request) {
     User foundUser = userRepository.findByEmailOrUserName(request.getIdentifier(), request.getIdentifier()).orElseThrow(
         // () -> new BadRequest("Identifiant ou mot de passe incorrect")
@@ -67,6 +80,12 @@ public class UserService {
     return authResponse;
   }
 
+  /**
+   * Update user.
+   * @param request user data
+   * @param userId user id
+   * @return updated user
+   */
   public UserResponse update(UserUpdateRequest request, Long userId) {
     if (userRepository.existsByEmailAndIdNot(request.getEmail(), userId)) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cette adresse mail est déjà utilisée");
@@ -89,6 +108,11 @@ public class UserService {
     return userResponseMapper.toResponse(user);
   }
 
+  /**
+   * Subscribe to theme.
+   * @param userId user id
+   * @param themeId theme id
+   */
   public void subscribe(Long userId, Long themeId) {
     User user = userRepository.findById(userId).orElseThrow(
         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
@@ -100,6 +124,11 @@ public class UserService {
     }
   }
 
+  /**
+   * Unsubscribe from theme.
+   * @param userId user id
+   * @param themeId theme id
+   */
   public void unsubscribe(Long userId, Long themeId) {
     User user = userRepository.findById(userId).orElseThrow(
         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
@@ -111,6 +140,11 @@ public class UserService {
     }
   }
 
+  /**
+   * Find user by id.
+   * @param userId user id
+   * @return user data
+   */
   public UserResponse findById(Long userId) {
     User user = userRepository.findById(userId).orElseThrow(
         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));

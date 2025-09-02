@@ -37,7 +37,6 @@ export class LoginComponent {
             this.errorMessage = null;
           },
           error: (error) => {
-            console.log(error)
             if (error?.error?.error) {
               this.errorMessage = error.error.error
             } else {

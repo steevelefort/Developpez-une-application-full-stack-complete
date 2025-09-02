@@ -23,6 +23,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Article entity that represents a post
+ */
 @Entity
 @Data
 @Table(name = "ARTICLES")

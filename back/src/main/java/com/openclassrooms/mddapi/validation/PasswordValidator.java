@@ -3,11 +3,16 @@ package com.openclassrooms.mddapi.validation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+/**
+ * Password validator.
+ */
 public class PasswordValidator implements ConstraintValidator<ValidPassword, String> {
 
   /**
-   * Check a password validity if it’s set
-   * Be sure to use the @NoBlank validator if needed !
+   * Check password is valid.
+   * @param password password to check
+   * @param context validation context
+   * @return true if valid
    */
   @Override
   public boolean isValid(String password, ConstraintValidatorContext context) {

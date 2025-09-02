@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.openclassrooms.mddapi.model.Theme;
 
+/**
+ * Repository for Theme data access
+ */
 @Repository
 public interface ThemeRepository extends JpaRepository<Theme, Long> {
 

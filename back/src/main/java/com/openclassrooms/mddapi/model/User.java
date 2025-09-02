@@ -22,6 +22,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * User entity
+ */
 @Entity
 @Data
 @Table(name = "USERS")

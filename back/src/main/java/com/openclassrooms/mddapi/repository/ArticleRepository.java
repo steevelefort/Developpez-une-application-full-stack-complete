@@ -9,9 +9,18 @@ import org.springframework.stereotype.Repository;
 
 import com.openclassrooms.mddapi.model.Article;
 
+/**
+ * Repository for Article data access
+ */
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
+  /**
+   * Finds articles for a user's feed based on their theme subscriptions
+   *
+   * @param userId the ID of the user
+   * @return list of articles from themes the user follows
+   */
   @Query("SELECT DISTINCT a FROM Article a " +
       "JOIN FETCH a.theme t " +
       "JOIN FETCH a.user u " +

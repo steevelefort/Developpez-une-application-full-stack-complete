@@ -5,6 +5,9 @@ import java.util.List;
 
 import lombok.Data;
 
+/**
+ * Response data for user information
+ */
 @Data
 public class UserResponse {
   private Long id;

@@ -5,6 +5,9 @@ import com.openclassrooms.mddapi.repository.ThemeRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+/**
+ * Theme exists validator.
+ */
 public class ThemeExistsValidator implements ConstraintValidator<ValidThemeExists, Long> {
 
   private ThemeRepository themeRepository;
@@ -14,7 +17,10 @@ public class ThemeExistsValidator implements ConstraintValidator<ValidThemeExist
   }
 
   /**
-   * Check if the specified theme exists 
+   * Check theme exists.
+   * @param themeId theme id to check
+   * @param context validation context
+   * @return true if exists
    */
   @Override
   public boolean isValid(Long themeId, ConstraintValidatorContext context) {

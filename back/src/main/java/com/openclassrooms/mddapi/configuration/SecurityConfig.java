@@ -34,6 +34,9 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
+/**
+ * Spring Security configuration
+ **/
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -47,15 +50,26 @@ public class SecurityConfig {
   @Value("${frontend.url}")
   public String frontendUrl;
 
+  /**
+   * Creates a password encoder for hashing passwords
+   *
+   * @return PasswordEncoder that uses BCrypt to hash passwords
+   */
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
+  /**
+   * Sets up the security rules for the application
+   *
+   * @param http the HTTP security configuration
+   * @return SecurityFilterChain with configured security rules
+   * @throws Exception if configuration fails
+   */
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(auth -> auth
-        // .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
         .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
         .anyRequest().authenticated())
         .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
@@ -68,6 +82,12 @@ public class SecurityConfig {
 
 
 
+  /**
+   * Creates a JWT decoder to read and verify JWT tokens
+   *
+   * @return JwtDecoder configured with the public key
+   * @throws RuntimeException if JWT configuration fails
+   */
   @Bean
   public JwtDecoder jwtDecoder() {
     try {
@@ -78,6 +98,12 @@ public class SecurityConfig {
     }
   }
 
+  /**
+   * Creates a JWT encoder to create and sign JWT tokens
+   *
+   * @return JwtEncoder configured with public and private keys
+   * @throws RuntimeException if JWT configuration fails
+   */
   @Bean
   public JwtEncoder jwtEncoder() {
     try {
@@ -97,6 +123,11 @@ public class SecurityConfig {
     }
   }
 
+  /**
+   * Sets up CORS rules to allow requests from the frontend
+   *
+   * @return CorsConfigurationSource with configured CORS rules
+   */
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
