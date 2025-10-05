@@ -2,6 +2,10 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
+/**
+ * Check if user is logged in.
+ * Redirect to login if not.
+ */
 export const authGuard: CanActivateFn = (route, state) => {
 
   const authService = inject(AuthService);

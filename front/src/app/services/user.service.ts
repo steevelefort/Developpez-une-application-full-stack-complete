@@ -20,11 +20,13 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
+  /** Get current user data */
   public me(): Observable<UserResponse> {
     return this.http.get<UserResponse>(`${this.baseUrl}${this.path}/me`)
       .pipe(tap(userResponse => this._user.set(userResponse)))
   }
 
+  /** Subscribe to theme */
   public subscribe(themeId: Number): Observable<MessageResponse> {
     return this.http.post<MessageResponse>(`${this.baseUrl}${this.path}/subscribe/${themeId}`,{})
       .pipe(tap(() => {
@@ -35,6 +37,7 @@ export class UserService {
       }))
   }
 
+  /** Unsubscribe from theme */
   public unSubscribe(themeId: Number): Observable<MessageResponse> {
     return this.http.delete<MessageResponse>(`${this.baseUrl}${this.path}/subscribe/${themeId}`,{})
       .pipe(tap(() => {
@@ -45,6 +48,7 @@ export class UserService {
       }))
   }
 
+  /** Update user profile */
   public update(updateRequest: RegisterRequest): Observable<UserUpdateResponse> {
     return this.http.put<UserUpdateResponse>(`${this.baseUrl}${this.path}/update`, updateRequest)
       .pipe(tap(userResponse => {

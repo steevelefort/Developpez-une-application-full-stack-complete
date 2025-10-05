@@ -18,6 +18,7 @@ export class ThemesService {
   constructor(private http: HttpClient) {
   }
 
+  /** Get all themes */
   public loadthemes(): Observable<Theme[]> {
     return this.http.get<Theme[]>(`${this.baseUrl}${this.path}`)
       .pipe(tap(themesResponse => this._themes.set(themesResponse)))

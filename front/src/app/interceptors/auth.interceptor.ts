@@ -2,6 +2,10 @@ import { inject } from '@angular/core';
 import { HttpInterceptorFn } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 
+/**
+ * Add JWT token to HTTP requests.
+ * Skip login and register requests.
+ */
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const token = inject(AuthService).token();
 
