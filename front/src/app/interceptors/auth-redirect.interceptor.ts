@@ -4,6 +4,10 @@ import { catchError, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
+/**
+ * Catch 401/403 errors.
+ * Logout user and redirect to login page.
+ */
 export const authRedirectInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const authService = inject(AuthService);

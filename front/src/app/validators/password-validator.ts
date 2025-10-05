@@ -1,5 +1,9 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
+/**
+ * Check password format.
+ * Min 8 chars, lower, upper, digit, special.
+ */
 export function passwordValidator(): ValidatorFn {
   const rx = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
   return (control: AbstractControl): ValidationErrors | null => {

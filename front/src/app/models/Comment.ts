@@ -1,3 +1,4 @@
+/** Comment data */
 export interface Comment {
   id: Number,
   userName: String,
@@ -6,6 +7,7 @@ export interface Comment {
   updatedAt: Date
 }
 
+/** Create comment request */
 export interface CommentRequest {
   content: String
 }

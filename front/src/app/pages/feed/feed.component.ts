@@ -14,22 +14,9 @@ import { Article } from 'src/app/models/Article';
 export class FeedComponent implements OnInit {
 
   errorMessage: String | null = null;
-  // sortDesc = signal(true);
   sortDesc = true;
 
   articles: Article[] = []
-
-  // articles = computed(() => {
-  //   const sortedFeed = [...this.feedService.feed()];
-  //
-  //   return sortedFeed.sort(
-  //     (a, b) => {
-  //       const dateA = new Date(a.createdAt).getTime();
-  //       const dateB = new Date(b.createdAt).getTime();
-  //       return this.sortDesc() ? dateB - dateA : dateA - dateB;
-  //     }
-  //   );
-  // })
 
   constructor(private feedService: FeedService) { }
 

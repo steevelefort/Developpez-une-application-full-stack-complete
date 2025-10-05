@@ -1,3 +1,4 @@
+/** Theme data */
 export interface Theme {
 
   id: Number,

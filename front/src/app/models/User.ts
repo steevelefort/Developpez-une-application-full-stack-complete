@@ -1,3 +1,4 @@
+/** User data with subscriptions */
 export interface UserResponse {
   id: Number;
   userName: String;
@@ -7,6 +8,7 @@ export interface UserResponse {
   subscriptions: Number[];
 }
 
+/** User data after update */
 export interface UserUpdateResponse {
   id: Number;
   userName: String;

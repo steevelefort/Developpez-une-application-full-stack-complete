@@ -29,16 +29,19 @@ export class AuthService {
     }
   }
 
+  /** Login user */
   public login(loginRequest: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.baseUrl}${this.path}/login`, loginRequest)
       .pipe(tap(authResponse => this.setAndSaveToken(authResponse.token)))
   }
 
+  /** Register new user */
   public register(registerRequest: RegisterRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.baseUrl}${this.path}/register`, registerRequest)
       .pipe(tap(authResponse => this.setAndSaveToken(authResponse.token)))
   }
 
+  /** Logout user */
   public logout(): void {
     this.setAndSaveToken(null);
   }
