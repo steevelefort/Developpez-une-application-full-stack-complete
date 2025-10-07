@@ -1,11 +1,11 @@
 <a [routerLink]="['/view-article', article?.id]">
-  <article class=" rounded-xl bg-grey-100 p-3 mx-4 my-2 overflow-hidden">
+  <article class=" rounded-xl bg-grey-100 p-3 mx-4 my-2 overflow-hidden h-40 md:h-48">
     <h2 class="font-bold text-base line-clamp-1 text-ellipsis">{{article?.title}}</h2>
     <div class="flex py-1 md:py-3">
       <div class="grow text-sm line-clamp-1 text-ellipsis">Date: <span class="font-bold">{{article?.createdAt |
           date:'dd/MM/yyyy'}}</span></div>
       <div class="grow text-sm text-ellipsis">Auteur: <span class="font-bold">{{article?.userName}}</span></div>
     </div>
-    <p class="line-clamp-5 text-sm">{{article?.content}}</p>
+    <p class="line-clamp-4 md:line-clamp-5 text-sm">{{article?.content}}</p>
   </article>
 </a>
