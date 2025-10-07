@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { DrawerComponent } from "../../drawer/drawer.component";
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-layout',
@@ -13,10 +14,14 @@ export class UserLayoutComponent {
 
   @Input() title = '';
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private authService: AuthService) { }
 
   onLogout() {
     this.authService.logout();
+    this.userService.clear();
     this.router.navigateByUrl("/");
   }
 }
