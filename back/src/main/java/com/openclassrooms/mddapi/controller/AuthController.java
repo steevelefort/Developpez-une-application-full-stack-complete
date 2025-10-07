@@ -38,7 +38,7 @@ public class AuthController {
    * @return auth response
    */
   @PostMapping(value = "/register", produces = "application/json")
-  // @SecurityRequirements({})
+  @SecurityRequirements({})
   public AuthResponse register(@Valid @RequestBody UserRegisterRequest request) {
     return userService.register(request);
   }

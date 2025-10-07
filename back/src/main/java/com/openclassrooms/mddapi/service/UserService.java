@@ -68,7 +68,6 @@ public class UserService {
    */
   public AuthResponse login(UserLoginRequest request) {
     User foundUser = userRepository.findByEmailOrUserName(request.getIdentifier(), request.getIdentifier()).orElseThrow(
-        // () -> new BadRequest("Identifiant ou mot de passe incorrect")
         () -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Identifiant ou mot de passe incorrect"));
 
     if (!passwordEncoder.matches(request.getPassword(), foundUser.getPassword())) {

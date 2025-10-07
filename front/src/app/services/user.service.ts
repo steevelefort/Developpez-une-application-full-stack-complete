@@ -26,6 +26,11 @@ export class UserService {
       .pipe(tap(userResponse => this._user.set(userResponse)))
   }
 
+  /** Clear user data */
+  public clear(): void {
+    this._user.set(null);
+  }
+
   /** Subscribe to theme */
   public subscribe(themeId: Number): Observable<MessageResponse> {
     return this.http.post<MessageResponse>(`${this.baseUrl}${this.path}/subscribe/${themeId}`,{})
