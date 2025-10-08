@@ -1,6 +1,6 @@
 <app-user-layout>
 
-  <!-- <main class="flex w-full md:max-w-4xl p-4 md:p-0 md:pl-16 md:pr-6 bg-amber-100"> -->
+@if (!notFound) {
   <main class="flex w-full p-4 md:p-0 md:pl-16 md:pr-6 text-xl">
     <div class="grow">
 
@@ -72,5 +72,8 @@
       </div>
     </div>
   </main>
-
+} @else {
+    <div class="font-bold text-5xl pt-5">Erreur 404</div>
+    <div class="">La page que vous cherchez n’existe pas</div>
+  }
 </app-user-layout>
