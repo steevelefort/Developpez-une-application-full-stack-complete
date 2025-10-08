@@ -18,11 +18,11 @@ export class ArticleViewComponent implements OnInit {
   article?: FullArticle;
   form: FormGroup;
   errorMessage: string | null = null;
+  notFound = false;
 
   constructor(
     private feedService: FeedService,
     private fb: FormBuilder,
-    // private themesService: ThemesService,
     private router: Router,
     private activatedRoute: ActivatedRoute
 
@@ -37,9 +37,11 @@ export class ArticleViewComponent implements OnInit {
       this.feedService.getOne(articleId).subscribe({
         next: (articleResponse: FullArticle) => {
           this.article = articleResponse
+          console.log(articleResponse)
         },
         error: () => {
-            this.errorMessage = "Une erreur est survenue, veuillez essayer à nouveau dans un instant.";
+            // this.errorMessage = "Une erreur est survenue, veuillez essayer à nouveau dans un instant.";
+            this.notFound = true;
         }
       });
     }
