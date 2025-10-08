@@ -40,7 +40,6 @@ export class ArticleViewComponent implements OnInit {
           console.log(articleResponse)
         },
         error: () => {
-            // this.errorMessage = "Une erreur est survenue, veuillez essayer à nouveau dans un instant.";
             this.notFound = true;
         }
       });
